@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <style>
+        #fact {
+            display: none;
+        }
+    </style>
+
+    <title>Date Range Picker with Number Facts</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+
+
+    <!--    <script type=>
+    function makeFrame() {
+   ifrm = document.createElement("IFRAME");
+   ifrm.setAttribute("src", "http://numbersapi.com/random");
+   ifrm.style.width = 640+"px";
+   ifrm.style.height = 480+"px";
+
+   document.body.appendChild(ifrm);
+}
+
+    </script> -->
+    <link rel="stylesheet" type="text/css" href="daterangepicker.css" />
+</head>
+
+<body class="bg-dark">
+
+    <p>
+        <br/>
+    </p>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="card bg-secondary text-white mt-5 p-4">
+                    <h1><center>Date Range Picker</center></h1>
+
+                    <center>
+                        <input type="text" name="daterange" class="form-control form-control-lg" id="numberInput" placeholder="Enter the date range...." />
+                    </center>
+                    <div id="fact" class="card-body"></div>
+                    <h4 class="card-title">
+          Number Fact:
+        </h4>
+                    <!--factText-->
+                    <p id="factOutput" class="card-text"></p>
+
+                    <h4>Enter a year to get a random fact</h4>
+                    <input type="number" class="form-control mt-3" id="yearInput" placeholder="2017">
+
+                    <div class="leapYear">
+                        <h4>Check for a leap year</h4>
+                        <input type="text" id="year" />
+                        <button type="button" value="">Check</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="moment.min.js"></script>
+    <script type="text/javascript" src="daterangepicker.js"></script>
+    <script>
+        $('input[name="daterange"]').daterangepicker();
+        $('input[name="daterange"]').daterangepicker({
+                locale: {
+                    format: 'DD-MM-YYYY'
+                },
+                startDate: '01-01-2013',
+                endDate: '31-12-2013'
+            },
+
+            function(start, end, label) {
+
+                alert("A new date range was chosen: " + start.format('DD-MM-YYYY') + 'to' + end.format('DD-MM-YYYY'))
+
+                // makeFrame()
+
+
+
+            });
+    </script>
+
+
+    <script>
+        var leapYear = (function() {
+            var $answer = $('<p />').addClass('answer');
+
+            function init() {
+                $('.leapYear').append($answer);
+                bindUI();
+            }
+
+            function bindUI() {
+                $('.leapYear button').on('click', function(e) {
+                    e.preventDefault(e);
+                    var year = $('.leapYear input').val();
+                    if (year > 0) {
+                        checkLeapYear(year);
+                    } else {
+                        respond($answer, 'Enter a valid year..');
+                    }
+                    $('.leapYear input').val('');
+                });
+            }
+
+            function checkLeapYear(year) {
+                var isLeapYear = year % 4 === 0;
+                var wasIs = year >= 2015 ? 'is' : 'was';
+                if (isLeapYear) {
+                    respond($answer, 'Yes! ' + year + ' ' + wasIs + ' a leap year.');
+                } else {
+                    respond($answer, 'Nope, ' + year + ' ' + wasIs + ' not a leap year.');
+                }
+            }
+
+            function respond($elem, response) {
+                $elem.html(response);
+            }
+
+            return {
+                init: init
+            }
+        }());
+
+        $(function() {
+            leapYear.init();
+        });
+    </script>
+
+
+    <!--  <script>
+      let fact = document.QuerySelector('#fact');
+       let fact = document.QuerySelector('#factText');
+
+       let numberInput = document.querySelector('#numberInput');
+       numberInput.addEventListener('input', /*getFactAjax*/ getFactFetch);
+//        function getFactAjax(){ 
+//               let number = numberInput.value;
+//               console.log(number);
+
+//               let xhr = new XMLHttpRequest();
+//               xhr.open('GET' "http://numbersapi.com/" + number);
+
+//               xhr.onload = function(){ 
+// //Insert leap year code
+//                   if(this.status === 200 && number!= ''){ 
+//                       fact.style.display = 'block';
+//                       factText.innerText = this.responseText;
+//                   }
+
+//               }
+//               xhr.send();
+
+//        }
+
+
+function getFactFetch(){ 
+    let number = numberInput.value;
+
+    fetch("http://numbersapi.com/" + number)
+    .then(response => response.text())
+    .then(data => { 
+        if(number != ''){ 
+          fact.style.display = 'block';
+            factText.innerText = data;
+        }
+    })
+    .catch(err => console.log(err));
+
+}
+
+    </script> -->
+
+
+
+
+    <script>
+        let yearInput = document.querySelector("#yearInput");
+        let factOutput = document.querySelector("#factOutput");
+
+        yearInput.addEventListener("input", getFactData);
+
+        function getFactData() {
+            let year = document.getElementById("yearInput").value;
+            if (year !== "") {
+                fetch(
+                        "https://cors-anywhere.herokuapp.com/http://numbersapi.com/" +
+                        year +
+                        "/year"
+                    )
+                    .then(function(response) {
+                        return response.text();
+                    })
+                    .then(function(data) {
+                        factOutput.style.display = "block";
+                        factOutput.innerHTML =
+                            "<strong>Fact for " + year + "</strong><br>" + data;
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
+
+
+            }
+        }
+    </script>
+</body>
+
+</html>
